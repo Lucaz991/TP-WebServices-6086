@@ -1,0 +1,48 @@
+<div class="container py-5 d-flex justify-content-center">
+    <div class="card shadow-lg" style="width: 100%; max-width: 400px; border-radius: 15px;">
+        
+        <div class="card-header bg-primary text-white p-4" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
+            <h4 class="text-center mb-3 fw-bold">🌤️ Clima Actual</h4>
+            <div class="input-group shadow-sm">
+                <input type="text" class="form-control border-0" placeholder="Ej: Córdoba, Argentina" 
+                    [(ngModel)]="ciudad" (keyup.enter)="buscarClima()">
+                <button class="btn btn-warning fw-bold text-dark border-0" 
+                        (click)="buscarClima()" [disabled]="cargando">
+                    {{ cargando ? '...' : 'Buscar' }}
+                </button>
+            </div>
+        </div>
+
+        <div class="card-body text-center p-4 bg-light" *ngIf="climaDatos">
+            <h3 class="fw-bold text-dark mb-0">{{ climaDatos.name }}, {{ climaDatos.sys.country }}</h3>
+            <p class="text-muted text-capitalize mb-0">{{ climaDatos.weather[0].description }}</p>
+            
+            <img [src]="'https://openweathermap.org/img/wn/' + climaDatos.weather[0].icon + '@4x.png'" 
+                alt="Icono clima" class="img-fluid drop-shadow" style="margin-top: -15px; margin-bottom: -15px;">
+            
+            <h1 class="display-2 fw-bold text-primary mb-4">{{ climaDatos.main.temp | number:'1.0-0' }}°C</h1>
+            
+            <div class="row text-muted">
+                <div class="col-6 border-end">
+                    <span class="d-block small text-uppercase fw-bold">Humedad</span>
+                    <span class="fs-5 text-dark fw-bold">{{ climaDatos.main.humidity }}%</span>
+                </div>
+                <div class="col-6">
+                    <span class="d-block small text-uppercase fw-bold">Sensación</span>
+                    <span class="fs-5 text-dark fw-bold">{{ climaDatos.main.feels_like | number:'1.0-0' }}°C</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body text-center p-4 bg-light" *ngIf="mensajeError">
+            <div class="alert alert-danger mb-0 border-0 shadow-sm" role="alert">
+                <strong>¡Ups!</strong> {{ mensajeError }}
+            </div>
+        </div>
+        
+        <div class="card-body text-center p-5 bg-light text-muted" *ngIf="!climaDatos && !mensajeError && !cargando">
+            <i class="fs-1 mb-3 d-block text-secondary">🌍</i>
+            <p class="mb-0">Hacé clic en buscar para conocer el clima en tiempo real.</p>
+        </div>
+    </div>
+</div>

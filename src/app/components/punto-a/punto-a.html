@@ -1,0 +1,29 @@
+<div class="container-fluid bg-secondary py-5 min-vh-100">
+    <div class="container">
+        <h2 class="text-center text-white fw-bold mb-5">Top 100 Mejores Películas IMDB</h2>
+
+        <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
+            
+            <div class="col" *ngFor="let peli of listaPeliculas">
+                
+                <div class="card h-100 bg-dark text-white border-light shadow-sm card-personalizada">
+                    
+                    <img [src]="peli.image" class="card-img-top object-fit-cover" alt="Poster" height="350px">
+                    
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title text-warning fw-bold">{{ peli.title }}</h5>
+                        <p class="card-text small text-info mb-2">Año: {{ peli.year }}</p>
+                        
+                        <p class="card-text text-light" style="font-size: 0.85rem;">
+                            {{ peli.description }}
+                        </p>
+                        
+                        <button class="btn btn-outline-warning mt-auto btn-sm">Ver Detalles</button>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

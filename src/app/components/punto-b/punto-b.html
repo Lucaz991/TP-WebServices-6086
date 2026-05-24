@@ -1,0 +1,49 @@
+<div class="container py-5">
+    <h2 class="text-center fw-bold mb-4">Marcas de Vehículos en el Mercado</h2>
+    
+    <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 g-3">
+        <div class="col" *ngFor="let marca of listaMarcas">
+            <button 
+                class="btn btn-outline-primary w-100 py-3 fw-bold shadow-sm"
+                (click)="verModelos(marca.id, marca.name)">
+                {{ marca.name }}
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" [ngStyle]="{'display': modalAbierto ? 'block' : 'none', 'background-color': 'rgba(0,0,0,0.6)'}">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title fw-bold">Modelos de {{ marcaSeleccionada }}</h5>
+                <button type="button" class="btn-close btn-close-white" (click)="cerrarModal()"></button>
+            </div>
+            
+            <div class="modal-body text-center">
+                
+                <div *ngIf="cargandoModelos" class="my-4">
+                    <div class="spinner-border text-primary mb-2" role="status"></div>
+                    <p class="fw-bold text-muted">Buscando autos en internet...</p>
+                </div>
+
+                <ul class="list-group text-start shadow-sm" *ngIf="!cargandoModelos && listaModelos.length > 0">
+                    <li class="list-group-item list-group-item-action fw-semibold" *ngFor="let auto of listaModelos">
+                        🚗 {{ auto.name }}
+                    </li>
+                </ul>
+
+                <p *ngIf="!cargandoModelos && listaModelos.length === 0" class="text-muted mt-3">
+                    No se encontraron modelos para esta marca.
+                </p>
+                
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cerrar</button>
+            </div>
+            
+        </div>
+    </div>
+</div>
